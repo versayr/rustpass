@@ -25,7 +25,7 @@ pub fn get_random_words(amount: usize) -> Vec<String> {
 
 pub fn generate_password(words: Vec<String>, padding_char: char, padding_count: usize, separator: char, digit_count: usize) -> String {
     let body: String = words.join(separator.to_string().as_str());
-    let padding: String = iter::repeat(padding_char).take(padding_count).collect();
+    let padding: String = iter::repeat_n(padding_char, padding_count).collect();
     format!("{0}{3}{2}{1}{2}{3}{0}", padding, body, separator, gen_numeric(digit_count))
 }
 
