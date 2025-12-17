@@ -5,7 +5,7 @@ use clap::Parser;
 #[derive(Parser)]
 struct Arguments {
     /// How many words in each passphrase?
-    #[arg(long, default_value_t = 4)]
+    #[arg(long, default_value_t = 3)]
     word_count: usize,
     /// Which character should pad the beginning and end of the passphrase?
     #[arg(long, default_value_t = '.')]
