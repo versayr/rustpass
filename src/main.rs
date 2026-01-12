@@ -28,7 +28,7 @@ struct Arguments {
 }
 
 fn main() {
-    let args : Arguments = Arguments::parse();
+    let args: Arguments = Arguments::parse();
     let mut words = get_random_words(args.word_count * args.count);
 
     while !words.is_empty() {
