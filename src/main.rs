@@ -1,5 +1,5 @@
 mod utils;
-use utils::*;
+use utils::{get_random_words, generate_password};
 use clap::Parser;
 
 #[derive(Parser)]
@@ -34,13 +34,13 @@ fn main() {
     while !words.is_empty() {
         let next = words.split_off(words.len() - args.word_count);
         let password = generate_password(
-            next, 
+            &next, 
             args.padding_char, 
             args.padding_count, 
             args.separator, 
             args.digit_count);
-        if args.inline { print!("{}", password); }
-        else { println!("{}", password) }
+        if args.inline { print!("{password}"); }
+        else { println!("{password}") }
     }
 }
 
