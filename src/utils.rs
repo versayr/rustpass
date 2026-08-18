@@ -1,8 +1,5 @@
 use core::iter;
-use rand::prelude::SliceRandom;
-use rand::seq::IteratorRandom; // 0.7.3
-use rand::thread_rng;
-use rand::Rng;
+use rand::{RngExt, prelude::SliceRandom, rngs::ThreadRng, seq::IteratorRandom};
 use std::{
     fs::File,
     io::{BufRead, BufReader},
@@ -16,8 +13,8 @@ pub fn get_random_words(amount: usize) -> Vec<String> {
 
     let lines = file.lines().map(|line| line.expect("Couldn't read line"));
 
-    let mut chosen = lines.choose_multiple(&mut thread_rng(), amount);
-    chosen.shuffle(&mut thread_rng());
+    let mut chosen = lines.sample(&mut ThreadRng::default(), amount);
+    chosen.shuffle(&mut ThreadRng::default());
     chosen
         .into_iter()
         .map(|w| get_word(&w))
@@ -49,7 +46,9 @@ fn get_word(line: &str) -> String {
 }
 
 fn gen_numeric(length: usize) -> String {
+    let mut rng = rand::rng();
+
     (0..length)
-        .map(|_| thread_rng().gen_range(0..=9).to_string())
+        .map(|_| rng.random_range(0..=9).to_string())
         .collect()
 }

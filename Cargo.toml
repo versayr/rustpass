@@ -1,13 +1,13 @@
 [package]
 name = "password-generator-rust"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 clap = { version = "4.4.12", features = ["derive"] }
-rand = "*"
+rand = { version = "*", features = ["thread_rng"] }
 structopt = "0.3.26"
 
 [lints.clippy]
