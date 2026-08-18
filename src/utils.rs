@@ -11,11 +11,10 @@ use std::{
 const FILENAME: &str = "src/eff_large_wordlist.txt";
 
 pub fn get_random_words(amount: usize) -> Vec<String> {
-    let file =
-        File::open(FILENAME).unwrap_or_else(|e| panic!("(;_;) file not found: {FILENAME}: {e}"));
+    let file = File::open(FILENAME).expect("File not found");
     let file = BufReader::new(file);
 
-    let lines = file.lines().map(|l| l.expect("Couldn't read line"));
+    let lines = file.lines().map(|line| line.expect("Couldn't read line"));
 
     let mut chosen = lines.choose_multiple(&mut thread_rng(), amount);
     chosen.shuffle(&mut thread_rng());
@@ -45,7 +44,7 @@ pub fn generate_password(
 }
 
 fn get_word(line: &str) -> String {
-    let (_, word) = line.rsplit_once('\t').unwrap();
+    let (_, word) = line.rsplit_once('\t').expect("Failed to parse words list.");
     word.to_owned()
 }
 

@@ -1,6 +1,6 @@
 mod utils;
-use utils::{get_random_words, generate_password};
 use clap::Parser;
+use utils::{generate_password, get_random_words};
 
 #[derive(Parser)]
 struct Arguments {
@@ -29,18 +29,29 @@ struct Arguments {
 
 fn main() {
     let args: Arguments = Arguments::parse();
-    let mut words = get_random_words(args.word_count * args.count);
+    let amount = args
+        .word_count
+        .checked_mul(args.count)
+        .expect("Too many passwords with too many words requested - count has overflowed.");
+    let mut words = get_random_words(amount);
 
     while !words.is_empty() {
-        let next = words.split_off(words.len() - args.word_count);
+        let split = words
+            .len()
+            .checked_sub(args.word_count)
+            .expect("Too many passwords requested - words list has run out.");
+        let next = words.split_off(split);
         let password = generate_password(
-            &next, 
-            args.padding_char, 
-            args.padding_count, 
-            args.separator, 
-            args.digit_count);
-        if args.inline { print!("{password}"); }
-        else { println!("{password}") }
+            &next,
+            args.padding_char,
+            args.padding_count,
+            args.separator,
+            args.digit_count,
+        );
+        if args.inline {
+            print!("{password}");
+        } else {
+            println!("{password}");
+        }
     }
 }
-
