@@ -9,7 +9,7 @@ license = "MIT"
 
 [dependencies]
 clap = { version = "4.4.12", features = ["derive"] }
-rand = { version = "*", features = ["thread_rng"] }
+rand = { version = "0.10.2", features = ["thread_rng"] }
 structopt = "0.3.26"
 
 [lints.clippy]
