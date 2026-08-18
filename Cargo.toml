@@ -1,5 +1,5 @@
 [package]
-name = "password-generator-rust"
+name = "rustpass"
 version = "0.1.0"
 edition = "2024"
 description = "A simple CLI for generating passwords quickly."
